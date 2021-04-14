@@ -1,2 +1,2 @@
 # LumiNet
-CNN pretrained on EL image datasets
+Trained CNN for feature extraction of luminescence images

@@ -100,7 +100,7 @@ Use print_dic to see the nested structure of the loaded dictionary object which 
 		 LINEAR
 '''
 #  </subcell>
-TF_model = Obj['CNN']['model_extractor']
+TF_model = Obj['CNN']['model_classifier']
 # %%-
 # %%--  Parameters
 PARAMETERS = Obj['PARAMETERS'] # Use loaded parameters as default. Explore PARAMETERS to edit
@@ -222,7 +222,7 @@ Ptmodel.trainModel(
 
 # %%--  Feature extraction
 CNN = Ptcompute.freezeCNN(PARAMETERS['CNN']['MODEL'],Ptmodel.model)
-Xcols, ML_df = Ptcompute.extractFeature(TF_model,ML_df,PARAMETERS['CNN']['TRANSFORM'],batch_size=PARAMETERS['CNN']['BATCH_SIZE'])
+Xcols, ML_df = Ptcompute.extractFeature(CNN,ML_df,PARAMETERS['CNN']['TRANSFORM'],batch_size=PARAMETERS['CNN']['BATCH_SIZE'])
 # %%-
 # %%--  Machine learning regression
 dataset.matchDf=ML_df.copy(deep=True)

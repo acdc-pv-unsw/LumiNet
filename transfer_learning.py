@@ -192,7 +192,6 @@ dataset.plotCol(targetCol,save=PARAMETERS['SAVE'])
 #  </subcell>
 # %%-
 # %%--  Feature extraction
-CNN = Ptcompute.freezeCNN(PARAMETERS['CNN']['MODEL'],TF_model)
 Xcols, dataset.matchDf = Ptcompute.extractFeature(TF_model,dataset.matchDf,PARAMETERS['CNN']['TRANSFORM'],batch_size=PARAMETERS['CNN']['BATCH_SIZE'])
 # %%-
 # %%--  Machine learning regression

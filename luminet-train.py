@@ -45,7 +45,7 @@ PARAMETERS = {
         # 'NORM',
         'MMAD',
     ][0],
-    'TARGET_MOD_VAL':[19,0.3], # NORM : Mean, Stdev ; MMAD : Median, Mad
+    'TARGET_MOD_VAL':[20,0.3], # NORM : Mean, Stdev ; MMAD : Median, Mad
     'TARGET_BIN':[ # Select one only
         # '10_QUANTILES',
         # '4_QUANTILES',
@@ -119,6 +119,7 @@ PARAMETERS['CNN']['TRANSFORM']=transforms.Compose([
 #  <subcell>    Load and select datasets
 All_datasets_location={
     # ADD BY USER
+    # 'dataset_id':'path of folder - needs to have match.csv with path column and TARGET_COL'
 }
 Datasets={}
 for dataset_id in PARAMETERS['DATASET_ID']:

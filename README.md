@@ -1,6 +1,8 @@
 # LumiNet
 Trained CNN for feature extraction of luminescence images stored in pickle files under LumiNet/Models for efficiency, short-circuit current and open-circuit voltage prediction. Details of the pickle files can be found in fine_tuning.py. You can train from scratch your own LumiNet CNN in luminet-train.py with your custom dataset, as well as use transfer learning (transfer_learning.py) or fine-tuning (fine_tuning.py) on your dataset for regression or classification tasks.
 
+Packages required are shown in requirement.txt (pip install requirement.txt), and models with the trained CNN and without the ML regression are also saved ("_noML") for back-compatibility issues with sklearn.
+
 # Paper: Half and full solar cell efficiency binning by deep learning on electroluminescence images
 https://doi.org/10.1002/pip.3484
 

@@ -108,6 +108,20 @@ PARAMETERS['NAME']="FEATURE EXTRACTION TEST"
 PARAMETERS['SAVEFOLDER']="TEST\\"
 PARAMETERS['TARGET_COL']="Eff"
 LOAD_FILE="test.csv" #Should have a "path" column and a TARGET_COL column
+PARAMETERS['CNN']['TRANSFORM_AUG']=transforms.Compose([
+    transforms.Resize((PARAMETERS['CNN']['IMAGE_SIZE'],PARAMETERS['CNN']['IMAGE_SIZE'])),
+    transforms.Grayscale(num_output_channels = 3),
+    transforms.RandomHorizontalFlip(),
+    transforms.RandomVerticalFlip(),
+    transforms.ToTensor(),
+    transforms.Normalize([0.5],[0.5])
+])
+PARAMETERS['CNN']['TRANSFORM']=transforms.Compose([
+    transforms.Resize((PARAMETERS['CNN']['IMAGE_SIZE'],PARAMETERS['CNN']['IMAGE_SIZE'])),
+    transforms.Grayscale(num_output_channels = 3),
+    transforms.ToTensor(),
+    transforms.Normalize([0.5],[0.5])
+])
 # %%-
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

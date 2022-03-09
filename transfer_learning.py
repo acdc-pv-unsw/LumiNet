@@ -23,7 +23,7 @@ Obj = [ #Select one
     LoadObj("Models\\","LumiNet_VGG_RF_Eff"), # Efficiency predictor
     # LoadObj("Models\\","LumiNet_VGG_RF_Isc"), # Current predictor
     # LoadObj("Models\\","LumiNet_VGG_RF_Voc"), # Voltage predictor
-    ][0]
+][0]
 #  <subcell>    Object layout
 #print_dic(Obj)
 '''
@@ -101,6 +101,7 @@ Use print_dic to see the nested structure of the loaded dictionary object which 
 '''
 #  </subcell>
 TF_model = Obj['CNN']['model_extractor']
+Obj['TIMESTAMP']=datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 # %%-
 # %%--  Parameters
 PARAMETERS = Obj['PARAMETERS'] # Use loaded parameters as default. Explore PARAMETERS to edit
@@ -211,6 +212,7 @@ Xcols, dataset.matchDf = Ptcompute.extractFeature(TF_model,dataset.matchDf,PARAM
 # %%--  Machine learning regression
 Skmodel = Skcompute(dataset,PARAMETERS['ML']['MODEL'][1],name=PARAMETERS['NAME']+"_"+PARAMETERS['ML']['MODEL'][0], save=PARAMETERS['SAVE'])
 Skmodel.initTraining()
+Skmodel.timestamp=Obj['TIMESTAMP']
 Skmodel.subset_size = PARAMETERS['ML']['SUBSET_SIZE']
 Skmodel.split_size = PARAMETERS['ML']['SPLIT_FRAC']
 Skmodel.trainModel(
@@ -220,4 +222,10 @@ Skmodel.trainModel(
     randomSeed=PARAMETERS['RANDOM_SEED'],
     comment=""
 )
+Obj['ML']['results']=Skmodel.regResults[0]
+Obj['ML']['model']=Skmodel.model
+# %%-
+# %%--  Save model
+Obj['PARAMETERS']=PARAMETERS
+if PARAMETERS['SAVE']: SaveObj(Obj,PARAMETERS['SAVEFOLDER']+"models\\",Obj['TIMESTAMP']+"_"+PARAMETERS['NAME'])
 # %%-

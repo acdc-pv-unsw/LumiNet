@@ -109,6 +109,7 @@ PARAMETERS['CNN']['TRANSFORM']=transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.5],[0.5])
 ])
+timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 # %%-
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -216,6 +217,7 @@ for id in Datasets:
 #  <subcell>    Assign Data
 print("Assigning dataset for ML and CNN training/validation")
 RES={}
+RES['TIMESTAMP']=timestamp
 ML_df = pd.DataFrame()
 CNN_df = pd.DataFrame()
 for id in Datasets:
@@ -235,6 +237,7 @@ cnnModel=Ptcompute.selectCNN(PARAMETERS['CNN']['MODEL'],nClass,preTrain=PARAMETE
 
 cnnDh.matchDf=CNN_df.copy(deep=True)
 Ptmodel = Ptcompute(cnnDh,cnnModel,name=PARAMETERS['NAME']+"_"+PARAMETERS['CNN']['MODEL'],save=PARAMETERS['SAVE'])
+Ptmodel.timestamp=RES['TIMESTAMP']
 Ptmodel.subset_size = PARAMETERS['CNN']['SUBSET_SIZE']
 Ptmodel.batch_size = PARAMETERS['CNN']['BATCH_SIZE']
 Ptmodel.split_size = PARAMETERS['CNN']['SPLIT_FRAC']
@@ -265,6 +268,7 @@ RES['ML']={}
 cnnDh.matchDf=ML_df.copy(deep=True)
 Skmodel = Skcompute(cnnDh,PARAMETERS['ML']['MODEL'][1],name=PARAMETERS['NAME']+"_"+PARAMETERS['ML']['MODEL'][0], save=PARAMETERS['SAVE'])
 Skmodel.initTraining()
+Skmodel.timestamp=RES['TIMESTAMP']
 Skmodel.subset_size = PARAMETERS['ML']['SUBSET_SIZE']
 Skmodel.split_size = PARAMETERS['ML']['SPLIT_FRAC']
 Skmodel.trainModel(
@@ -296,8 +300,6 @@ if PARAMETERS['CALCULATE_STATPARAM']:
     RES['ML']['linear_model']=Skmodel.model
 #  </subcell>
 #  <subcell>    Save model
-timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-RES['TIMESTAMP']=timestamp
 RES['PARAMETERS']=PARAMETERS
 if PARAMETERS['SAVE']: SaveObj(RES,PARAMETERS['SAVEFOLDER']+PARAMETERS['NAME']+"\\",timestamp+"_results")
 #  </subcell>
